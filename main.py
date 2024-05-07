@@ -10,7 +10,7 @@ datos_recibidos = []
 
 # Función para recibir datos del socket
 def recibir_datos():
-    HOST = '192.168.100.39'  # Escucha en todas las interfaces de red
+    HOST = '0.0.0.0'  # Escucha en todas las interfaces de red
     PORT = 54321  # Puerto de escucha
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0) as s:
         print("socket creado")
