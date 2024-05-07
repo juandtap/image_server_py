@@ -13,9 +13,13 @@ def recibir_datos():
     HOST = '0.0.0.0'  # Escucha en todas las interfaces de red
     PORT = 54321  # Puerto de escucha
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        print("socket creado")
         s.bind((HOST, PORT))
+        print("socket vinculado")
         s.listen()
+        print("socket escuchando ...")
         conn, addr = s.accept()
+        print("conexion aceptada ...")
         with conn:
             print('Conexión establecida desde', addr)
             while escuchando:
@@ -38,7 +42,7 @@ def index():
 def iniciar_escucha():
     global escuchando
     escuchando = True
-    print("iniciar \nescuchando datos ....")
+    print("iniciar ")
     recibir_datos()  # Iniciar la función para recibir datos
     
     return 'Escuchando datos...'
