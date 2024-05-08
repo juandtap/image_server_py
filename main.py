@@ -19,17 +19,36 @@ def recibir_datos():
         s.listen()
         print("socket escuchando ...")
         conn, addr = s.accept()
+        
         print("conexion aceptada ...")
+        full_data = b""
         with conn:
             print('Conexión establecida desde', addr)
+            
             while escuchando:
-                data = conn.recv(1024)
+                data = conn.recv(4096)
                 if not data:
                     break
-                # Aquí puedes procesar los datos recibidos como desees
-                print('Datos recibidos:', data.decode())
-    s.close()  # Cierra el socket al finalizar
 
+                full_data+=data
+                
+
+                print('Datos recibidos:', len(full_data),"bytes")
+                
+
+            guardar_imagen(full_data)
+            print("imagen recibida!")
+    s.close()  
+
+
+
+# Función para guardar la imagen recibida
+def guardar_imagen(data):
+    pos = data.find(b"\r\n\r\n")
+    print("header length: ",pos)
+    print(data[:pos].decode())
+    with open('imagen_recibida.jpg', 'wb') as f:  # Cambiar la extensión según el tipo de imagen recibida
+        f.write(data)
 
 # Ruta para la página principal
 @app.route('/')
