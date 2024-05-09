@@ -3,24 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask Socket Demo</title>
-    <!-- Agregar estilos de Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Servidor de procesamiento de Imagen</title>
 </head>
 <body>
-    <div class="container">
-        <h1 class="mt-5">Datos Recibidos</h1>
-        <div id="datos">
-            {% for dato in datos%}
-                <p>{{ dato }}</p>
-            {% endfor %}
-        </div>
-        <form action="/iniciar_escucha" method="post">
-            <button type="submit" class="btn btn-primary mt-3">Iniciar Escucha</button>
-        </form>
-        <form action="/detener_escucha" method="post">
-            <button type="submit" class="btn btn-danger mt-3">Detener Escucha</button>
-        </form>
-    </div>
+    <h1>Imagen </h1>
+    <p>{{ mensaje }}</p>
 </body>
 </html>

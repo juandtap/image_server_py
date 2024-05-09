@@ -1,80 +1,27 @@
-from flask import Flask, render_template, request
-import socket
-
+from flask import Flask, request, render_template
+import time
 app = Flask(__name__)
 
-# Variable global para controlar el estado de la escucha
-escuchando = False
+TIMEOUT = 30
 
-datos_recibidos = []
-
-# Función para recibir datos del socket
-def recibir_datos():
-    HOST = '0.0.0.0'  # Escucha en todas las interfaces de red
-    PORT = 54321  # Puerto de escucha
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0) as s:
-        print("socket creado")
-        s.bind((HOST, PORT))
-        print("socket vinculado")
-        s.listen()
-        print("socket escuchando ...")
-        conn, addr = s.accept()
-        
-        print("conexion aceptada ...")
-        full_data = b""
-        with conn:
-            print('Conexión establecida desde', addr)
-            
-            while escuchando:
-                data = conn.recv(4096)
-                if not data:
-                    break
-
-                full_data+=data
-                
-
-                print('Datos recibidos:', len(full_data),"bytes")
-                
-
-            guardar_imagen(full_data)
-            print("imagen recibida!")
-    s.close()  
-
-
-
-# Función para guardar la imagen recibida
-def guardar_imagen(data):
-    pos = data.find(b"\r\n")
-    print("header length: ",pos)
-    imagen = data[pos+4:]
-    with open('imagen_recibida.png', 'wb') as f:  # Cambiar la extensión según el tipo de imagen recibida
-        f.write(imagen)
-    f.close()
-
-# Ruta para la página principal
 @app.route('/')
 def index():
-    return render_template('index.html', datos = datos_recibidos)
+    return render_template('index.html', mensaje='esperando imagen ....')
 
+@app.route('/recepcion', methods=['POST'])
+def recepcion():
+    time.sleep(TIMEOUT)
+    if 'file' not in request.files:
+        return 'No se ha enviado ningún archivo', 400
 
-# Ruta para iniciar la escucha de datos
-@app.route('/iniciar_escucha', methods=['POST'])
-def iniciar_escucha():
-    global escuchando
-    escuchando = True
-    print("iniciar ")
-    recibir_datos()  # Iniciar la función para recibir datos
-    
-    return 'Escuchando datos...'
+    file = request.files['file']
+    if file.filename == '':
+        return 'No se ha seleccionado ningún archivo', 400
 
+    if file:
+        file.save('imagen_recibida.png')  # Guardar la imagen recibida en el servidor
+        return render_template('index.html', mensaje ='Imagen recibida correctamente')
 
-# Ruta para detener la escucha de datos
-@app.route('/detener_escucha', methods=['POST'])
-def detener_escucha():
-    global escuchando
-    escuchando = False
-    print("escucha de datos detenidad.!")
-    return 'Escucha de datos detenida.'
 
 if __name__ == '__main__':
     app.run(debug=True)
