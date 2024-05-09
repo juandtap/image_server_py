@@ -8,7 +8,7 @@ app = Flask(__name__)
 def index():
     return render_template('index.html', mensaje='esperando imagen ....')
 
-@app.route('/recepcion', methods=['POST', "GET"])
+@app.route('/recepcion', methods=['GET', 'POST'])
 def recepcion():
 
     while request.content_type != 'image/png':
