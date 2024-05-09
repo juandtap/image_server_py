@@ -44,11 +44,12 @@ def recibir_datos():
 
 # Función para guardar la imagen recibida
 def guardar_imagen(data):
-    pos = data.find(b"\r\n\r\n")
+    pos = data.find(b"\r\n")
     print("header length: ",pos)
-    print(data[:pos].decode())
-    with open('imagen_recibida.jpg', 'wb') as f:  # Cambiar la extensión según el tipo de imagen recibida
-        f.write(data)
+    imagen = data[pos+4:]
+    with open('imagen_recibida.png', 'wb') as f:  # Cambiar la extensión según el tipo de imagen recibida
+        f.write(imagen)
+    f.close()
 
 # Ruta para la página principal
 @app.route('/')
