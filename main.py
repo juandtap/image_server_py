@@ -1,26 +1,23 @@
 from flask import Flask, request, render_template
-import time
+from PIL import Image
+from io import BytesIO
 app = Flask(__name__)
 
-TIMEOUT = 30
 
 @app.route('/')
 def index():
     return render_template('index.html', mensaje='esperando imagen ....')
 
-@app.route('/recepcion', methods=['POST'])
+@app.route('/recepcion', methods=['POST', "GET"])
 def recepcion():
-    time.sleep(TIMEOUT)
-    if 'file' not in request.files:
-        return 'No se ha enviado ningún archivo', 400
 
-    file = request.files['file']
-    if file.filename == '':
-        return 'No se ha seleccionado ningún archivo', 400
+    while request.content_type != 'image/png':
+        pass
 
-    if file:
-        file.save('imagen_recibida.png')  # Guardar la imagen recibida en el servidor
-        return render_template('index.html', mensaje ='Imagen recibida correctamente')
+    image = request.get_data()
+    with Image.open(BytesIO(image)) as img:
+        img.save('imagen_recibida.png')
+    return render_template('index.html', mensaje ='Imagen recibida correctamente')
 
 
 if __name__ == '__main__':
