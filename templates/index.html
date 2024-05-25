@@ -3,10 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servidor de procesamiento de Imagen</title>
+    <title>Servidor Flask</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"">
 </head>
 <body>
-    <h1>Imagen </h1>
-    <p>{{ mensaje }}</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+               
+                <h1>Servidor de fusión de imagenes</h1>
+                <h3>{{ mensaje }}</h3>
+                {% if image_src %}
+                <div class="image-container card">
+                    <div class="card-body">
+                        <h5 class="card-title">Imagen recibida</h5>
+                        <img src="{{ url_for('static', filename='Images/imagen_recibida.png') }}" class="img-fluid" alt="Imagen recibida">
+                    </div>
+                    
+
+                </div>
+                {% endif %}
+                <br>
+                    <!-- al presionar el boton se recarga la pagina mostrando la imagen recibida desde la app android -->
+                    <button id="reload-button" class=" btn btn-primary">recibir imagen</button>
+            </div>
+        </div>
+    </div>
 </body>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </html>
