@@ -1,0 +1,2 @@
+aqui se recibe la imagen desde la aplicacion android
+las imagens varian por lo que estas son ignoradas por git
