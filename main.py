@@ -32,7 +32,8 @@ def recepcion():
             img.save(image_path)
         flag_imagen_recibida = True
         print("imagen recibida")
-    return  jsonify({'mensaje': 'Hola desde Flask!'})
+    # solo se muestra en curl 
+    return  jsonify({'mensaje': 'imagen recibida'})
 
 
 

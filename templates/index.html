@@ -26,9 +26,23 @@
                 {% endif %}
                 <br>
                     <!-- al presionar el boton se recarga la pagina mostrando la imagen recibida desde la app android -->
-                    <button id="reload-button" class=" btn btn-success">recibir imagen</button>
+                    <button id="reload-button" class="btn btn-success">recibir imagen</button>
             </div>
+
+              <!-- Agregar el stream de video -->
+              <div class="video-container card">
+                <div class="card-body">
+                    <h2>Video en vivo</h2>
+                    <img  id="videoStream" width="100%" src="http://192.168.100.44:4747/video"/>
+                        
+                    
+                </div>
+               
+            </div>
+          
+
         </div>
+        <button class="btn btn-success">Capturar Imagen</button>
     </div>
 </body>
 <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
