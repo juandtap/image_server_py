@@ -4,9 +4,13 @@ body{
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(31,28,152,1) 100%, rgba(9,9,121,1) 100%, rgba(0,212,255,1) 100%);
 }
 
+.titulo{
+    text-align: center;
+}
+
 .img-fluid{
     width: auto;
-    height: 200px;
+    height:auto;
 }
 
 .container{
@@ -16,4 +20,22 @@ body{
 .image-container {
     color: black;
     margin-top: 20px;
+}
+
+.card-container {
+    color: black;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.card-1, .card-2 {
+    flex: 1 1 48%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.card-3 {
+    flex: 1 1 100%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.card {
+    margin-bottom: 1rem;
 }

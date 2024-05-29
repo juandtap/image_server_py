@@ -8,42 +8,46 @@
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"">
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-               
-                <h1>Servidor de fusión de imagenes</h1>
-                <h3>{{ mensaje }}</h3>
-                {% if image_src %}
-                <div class="image-container card">
-                    <div class="card-body">
-
-                        <img src="{{ url_for('static', filename='Images/imagen_recibida.png') }}" class="img-fluid" alt="Imagen recibida">
+    <br/>
+    <h1 class="titulo">Servidor de fusión de imagenes</h1>
+    <div class="container mt-5">
+        <div class="card-container">
+            <div class="card card-1">
+                <div class="card-body">
+                    <h3>{{ mensaje }}</h3>
+                    {% if image_src %}
+                    <div class="image-container card">
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='Images/imagen_recibida.png') }}" class="img-fluid" alt="Imagen recibida">
+                        </div>
                     </div>
-                    
-
-                </div>
-                {% endif %}
-                <br>
-                    <!-- al presionar el boton se recarga la pagina mostrando la imagen recibida desde la app android -->
+                    {% endif %}
+                    <br>
                     <button id="reload-button" class="btn btn-success">recibir imagen</button>
+                </div>
             </div>
-
-              <!-- Agregar el stream de video -->
-              <div class="video-container card">
+            
+            <div class="card card-2">
                 <div class="card-body">
                     <h2>Video en vivo</h2>
-                    <img  id="videoStream" width="100%" src="http://192.168.100.44:4747/video"/>
-                        
-                    
+                    <input type="text" id="fuenteVideo" class="form-control mb-2" placeholder="192.168.1.3:4747">
+                    <button onclick="agregarVideo()" class="btn btn-primary mb-2">Obtener video</button>
+                    <div id="videoContainer"></div>
                 </div>
-               
             </div>
-          
-
+            
+            <div class="card card-3">
+                <div class="card-body">
+                    <h2>Fuente de video</h2>
+                    <img src="{{ url_for('video_feed') }}" class="img-fluid" alt="Video en vivo" id="video" width="800" height="600">
+                    <button onclick="detenerVideo()" class="btn btn-danger">Detener Video</button>
+                </div>
+            </div>
         </div>
-        <button class="btn btn-success">Capturar Imagen</button>
     </div>
+
+
+
 </body>
 <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </html>
