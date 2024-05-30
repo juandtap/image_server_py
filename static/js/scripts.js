@@ -17,15 +17,48 @@ function detenerVideo() {
       });
 }
 
+
+
 function agregarVideo() {
-  var address = document.getElementById('fuenteVideo').value;
-  if (address) {
-      var videoElement = document.createElement('img');
-      videoElement.setAttribute('src', 'http://' + address + '/video');
-      videoElement.setAttribute('width', '100%');
-      videoElement.setAttribute('alt', 'Video en vivo');
-      document.getElementById('videoContainer').appendChild(videoElement);
-  } else {
-      alert('Por favor ingresa una dirección IP y un puerto.');
-  }
+    var address = document.getElementById('fuenteVideo').value;
+    if (address) {
+        fetch('/set_video_source', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ address: address }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                var videoElement = document.createElement('img');
+                videoElement.setAttribute('src', 'http://' + address + '/video');
+                videoElement.setAttribute('width', '100%');
+                videoElement.setAttribute('alt', 'Video en vivo');
+                document.getElementById('videoContainer').appendChild(videoElement);
+            } else {
+                alert('Error al establecer la fuente de video.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    } else {
+        alert('Por favor ingresa una dirección IP y un puerto.');
+    }
 }
+
+// guardar por si acaso
+// function agregarVideo() {
+//   var address = document.getElementById('fuenteVideo').value;
+//   if (address) {
+//       var videoElement = document.createElement('img');
+//       videoElement.setAttribute('src', 'http://' + address + '/video');
+//       videoElement.setAttribute('width', '100%');
+//       videoElement.setAttribute('alt', 'Video en vivo');
+//       document.getElementById('videoContainer').appendChild(videoElement);
+//   } else {
+//       alert('Por favor ingresa una dirección IP y un puerto.');
+//   }
+// }

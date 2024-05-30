@@ -4,3 +4,4 @@ static/Images/imagen_recibida.png
 *.pem
 pruebas.py
 *.mov
+*.mp4
