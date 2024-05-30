@@ -13,15 +13,15 @@ flag_imagen_recibida = False
 video_src = "video.mov"
 
 # direccion de la webcam android obtenida desde el html
-video_src_2 = "http://192.168.100.44:4747/video"
+video_src_2 = None
 
 @app.route('/set_video_source', methods=['POST'])
 def set_video_source():
-    global video_src2
+    global video_src_2
     data = request.get_json()
     address = data.get('address')
     if address:
-        video_src2 = address
+        video_src_2 = address
         return jsonify(success=True)
     return jsonify(success=False)
 
@@ -84,7 +84,8 @@ def video_feed():
 
 def frames_video_externo():
     global video_src_2
-    video_ext = cv.VideoCapture(video_src_2)
+    print(video_src_2)
+    video_ext = cv.VideoCapture("http://"+video_src_2+"/video")
     
    
     if not video_ext.isOpened():

@@ -32,13 +32,11 @@ function agregarVideo() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                document.getElementById('video-externo').src = "{{ url_for('video_feed_externo') }}"
-                //var videoElement = document.createElement('img');
-                //videoElement.setAttribute('src', 'http://' + address + '/video');
-                //videoElement.setAttribute('src', "{{ url_for('video_feed_externo') }}")
-                //videoElement.setAttribute('width', '100%');
-                //videoElement.setAttribute('alt', 'Video en vivo');
-                //document.getElementById('videoContainer').appendChild(videoElement);
+                var videoUrl = document.getElementById('get-url').getAttribute('data-url');
+                document.getElementById('video-externo').src = videoUrl
+                //var videoext = document.getElementById('video-externo')
+                //videoext.setAttribute('src', videoUrl)
+                
             } else {
                 alert('Error al establecer la fuente de video.');
             }
