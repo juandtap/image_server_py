@@ -49,6 +49,26 @@ function agregarVideo() {
     }
 }
 
+function aplicarFiltro() {
+    // Aquí puedes realizar una solicitud AJAX para llamar a la función en Python
+    fetch('/aplicar_filtro', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ mensaje: "Aplicar filtro" })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        
+        console.log("aplicar filtro");;
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
 // guardar por si acaso
 // function agregarVideo() {
 //   var address = document.getElementById('fuenteVideo').value;

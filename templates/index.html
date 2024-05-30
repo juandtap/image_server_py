@@ -31,15 +31,16 @@
             <div class="card card-2">
                 <div class="card-body">
                     <h2>Fuente de video</h2>
-                    <input type="text" id="fuenteVideo" class="form-control mb-2" placeholder="192.168.1.3:4747">
-                    <button onclick="agregarVideo()" id="get-url" class="btn btn-success mb-2" data-url="{{ url_for('video_feed_externo') }}" >Obtener video</button>
-                    <!-- <div id="videoContainer"></div> -->
+                    <input type="text" id="fuenteVideo" class="form-control mb-2" placeholder="172.16.220.63:4747">
+                    <button onclick="" id="get-url" class="btn btn-success mb-2" data-url="{{ url_for('video_feed_externo') }}" >Obtener video</button> -->
+                   
                     <img id="video-externo" class="img-fluid", alt="'video externo" />
                 </div>
             </div>
             
             <div class="card card-3">
                 <div class="card-body">
+                    <button onclick="aplicarFiltro()" id="boton-filtro" class="btn btn-success">Aplicar Fusion</button>
                     <h2>Fuente de video</h2>
                     <img src="{{ url_for('video_feed') }}" class="img-fluid" alt="Video en vivo" id="video" width="800" height="600">
                     <button onclick="detenerVideo()" class="btn btn-danger">Detener Video</button>

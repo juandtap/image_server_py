@@ -79,7 +79,9 @@ def bordesColor(frame):
 
 
 
-# video = cv.VideoCapture("http://192.168.100.44:4747/video")
+# video = cv.VideoCapture("http://192.168.1.5:4747/video")
+# video = cv.VideoCapture("http://172.16.220.63:4747/video")
+
 
 # if video.isOpened():
 #     while True:

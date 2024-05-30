@@ -6,6 +6,10 @@
 
 Servidor Flask para fusion de imagenes provenientes desde dos fuentes, la primera la computadora desde donde se ejecuta este servidor y la segunda desde la apliaccion en Android la cual envia la imagen procesada por sockets.
 
+### Funcionamiento
+
+Para mayor comodidad la webcam debe estar ya activa, y la imagen tambien enviada desde android antes de abrir
+
 ### Metodo para recibir imagenes
 Desde la app de android se envia la imagen por http al endpoint http://servidorflask:5000/recepcion
 En la app de android se especifica la direccion IP del servidor flask
