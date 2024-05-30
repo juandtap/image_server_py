@@ -5,3 +5,4 @@ static/Images/imagen_recibida.png
 pruebas.py
 *.mov
 *.mp4
+__pycache__/

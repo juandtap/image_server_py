@@ -33,7 +33,8 @@
                     <h2>Fuente de video</h2>
                     <input type="text" id="fuenteVideo" class="form-control mb-2" placeholder="192.168.1.3:4747">
                     <button onclick="agregarVideo()" class="btn btn-success mb-2">Obtener video</button>
-                    <div id="videoContainer"></div>
+                    <!-- <div id="videoContainer"></div> -->
+                    <img  src="{{ url_for('video_feed_externo') }}" id="video-externo" class="img-fluid", alt="'video externo" />
                 </div>
             </div>
             

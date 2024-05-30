@@ -3,6 +3,8 @@ from PIL import Image
 from io import BytesIO
 import os
 import cv2 as cv
+# import desde efectos.py
+from efectos import removeBackgroud, bordesColor
 
 app = Flask(__name__)
 
@@ -11,7 +13,7 @@ flag_imagen_recibida = False
 video_src = "video.mov"
 
 # direccion de la webcam android obtenida desde el html
-video_src_2 = None
+video_src_2 = "http://192.168.100.44:4747/video"
 
 @app.route('/set_video_source', methods=['POST'])
 def set_video_source():
@@ -48,18 +50,25 @@ def frames_video():
         if not succes:
             break
         else:
+            if video_externo is not None:
+                # aplico efecto poner bordes
+                #frame2 = bordesColor(frame2)
+                # _, buffer2 = cv.imencode('.jpg', frame2)
+                # frame2 = buffer2.tobytes()
+                # yield (b'--frame\r\n'
+                #     b'Content-Type: image/jpeg\r\n\r\n' + frame2 + b'\r\n')
+                pass
+                
             # puttext bugeado en opencv python no muestra los fps que son
             #cv.putText(frame, str(cv.CAP_PROP_FPS), (40,40), cv.FONT_HERSHEY_SIMPLEX ,1,(255, 0, 0) , 2 ,cv.LINE_AA)
+           
             _, buffer = cv.imencode('.jpg', frame)
+            
             frame = buffer.tobytes()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
             
-            if video_externo is not None:
-                _, buffer2 = cv.imencode('.jpg', frame2)
-                frame2 = buffer2.tobytes()
-                yield (b'--frame\r\n'
-                    b'Content-Type: image/jpeg\r\n\r\n' + frame2 + b'\r\n')
+            
             
 
 
@@ -71,6 +80,39 @@ def frames_video():
 def video_feed():
     return Response(frames_video(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+def frames_video_externo():
+    global video_src_2
+    video_ext = cv.VideoCapture(video_src_2)
+    
+   
+    if not video_ext.isOpened():
+        print("No se pudo abrir el video")
+        return
+    
+
+    while True:
+        
+        succes2, frame2 = video_ext.read()
+        
+        if not succes2:
+            break
+        else:
+            if video_ext is not None:
+                # aplico efecto poner bordes
+                frame2 = removeBackgroud(frame2)
+                _, buffer2 = cv.imencode('.jpg', frame2)
+                frame2 = buffer2.tobytes()
+                yield (b'--frame\r\n'
+                    b'Content-Type: image/jpeg\r\n\r\n' + frame2 + b'\r\n')
+                
+
+@app.route('/video_feed_externo')
+def video_feed_externo():
+    return Response(frames_video_externo(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
 
 # funcion para detener el video
 @app.route('/stop_video')

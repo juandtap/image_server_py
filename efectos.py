@@ -79,22 +79,22 @@ def bordesColor(frame):
 
 
 
-video = cv.VideoCapture("http://192.168.100.44:4747/video")
+# video = cv.VideoCapture("http://192.168.100.44:4747/video")
 
-if video.isOpened():
-    while True:
-        _, frame = video.read()
+# if video.isOpened():
+#     while True:
+#         _, frame = video.read()
 
-        frame_sin_fondo = removeBackgroud(frame)
+#         frame_sin_fondo = removeBackgroud(frame)
 
-        frame_bordes = bordesColor(frame_sin_fondo)
+#         frame_bordes = bordesColor(frame_sin_fondo)
 
-        cv.imshow("Original", frame)
-        cv.imshow("sin fondo", frame_sin_fondo)
-        cv.imshow("bordes", frame_bordes)
+#         cv.imshow("Original", frame)
+#         cv.imshow("sin fondo", frame_sin_fondo)
+#         cv.imshow("bordes", frame_bordes)
         
 
-        if cv.waitKey(1) == ord('q'):
-            break
+#         if cv.waitKey(1) == ord('q'):
+#             break
 
 
