@@ -12,9 +12,10 @@ flag_imagen_recibida = False
 
 video_src = "video.mov"
 
-# direccion de la webcam android obtenida desde el html
+# direccion de la webcam
 video_src_2 = None
 
+# obtienne la ip de la webcam al presionar el boton "obtener video"
 @app.route('/set_video_source', methods=['POST'])
 def set_video_source():
     global video_src_2
@@ -27,15 +28,11 @@ def set_video_source():
 
 # en esta funcion se realiza la fusion de imagenes
 def frames_video():
-    global video_src_2
+    
     video_local = cv.VideoCapture(video_src)
     video_local.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
     video_local.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
 
-    if video_src_2:
-        video_externo = cv.VideoCapture("http://"+video_src_2+"/video")
-    else:
-        video_externo = None
 
     if not video_local.isOpened():
         print("No se pudo abrir el video")
@@ -45,22 +42,12 @@ def frames_video():
     while True:
         
         succes, frame = video_local.read()
-        if video_externo is not None:
-            succes2 , frame2 = video_externo.read()
+       
         if not succes:
             break
         else:
-            if video_externo is not None:
-                # aplico efecto poner bordes
-                #frame2 = bordesColor(frame2)
-                # _, buffer2 = cv.imencode('.jpg', frame2)
-                # frame2 = buffer2.tobytes()
-                # yield (b'--frame\r\n'
-                #     b'Content-Type: image/jpeg\r\n\r\n' + frame2 + b'\r\n')
-                pass
-                
-            # puttext bugeado en opencv python no muestra los fps que son
-            #cv.putText(frame, str(cv.CAP_PROP_FPS), (40,40), cv.FONT_HERSHEY_SIMPLEX ,1,(255, 0, 0) , 2 ,cv.LINE_AA)
+            # cap_prop_fps bugeado en opencv python no muestra los fps que son
+            cv.putText(frame, str(cv.CAP_PROP_FPS), (40,40), cv.FONT_HERSHEY_SIMPLEX ,1,(255, 0, 0) , 2 ,cv.LINE_AA)
            
             _, buffer = cv.imencode('.jpg', frame)
             
@@ -69,12 +56,8 @@ def frames_video():
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
             
             
-            
-
-
     video_local.release()
-    video_externo.release()
-
+    
 
 @app.route('/video_feed')
 def video_feed():

@@ -89,9 +89,12 @@ def bordesColor(frame):
 
 #         frame_bordes = bordesColor(frame_sin_fondo)
 
+#         resultado_final = cv.addWeighted(frame_sin_fondo, 1, frame_bordes, 1, 0)
+
 #         cv.imshow("Original", frame)
 #         cv.imshow("sin fondo", frame_sin_fondo)
 #         cv.imshow("bordes", frame_bordes)
+#         cv.imshow("final", resultado_final)
         
 
 #         if cv.waitKey(1) == ord('q'):
