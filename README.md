@@ -8,7 +8,7 @@ Servidor Flask para fusion de imagenes provenientes desde dos fuentes, la primer
 
 ### Funcionamiento
 
-Para mayor comodidad la webcam debe estar ya activa, y la imagen tambien enviada desde android antes de abrir
+Para mayor comodidad la webcam debe estar ya activa
 
 ### Metodo para recibir imagenes
 Desde la app de android se envia la imagen por http al endpoint http://servidorflask:5000/recepcion
@@ -21,7 +21,7 @@ La segunda fuente de video es la camara de un telefono android, usado como webca
 El frontend pide la direccion IP de la "webcam"
 
 ### Fusion 
-La imagen recibida desde android y el video externo con efectos, son "fusionados" con el video.
+La imagen recibida desde android y el video externo con efectos, son "fusionados" con el video local.
 
 ### Efectos
 
@@ -30,11 +30,16 @@ Se tienen los siguientes efectos:
 App Android:
     - Fusion con textura de fuego
     - Quitar fondo usando el espacio de colores LAB
+    
 
 Servidor Flask:
     - Quitar fondo
     - Deteccion de bordes (Canny, Dilaacion, GaussianBlur)
     
+#### Nota
+Para el codigo de quitar el fondo con espacion de color LAB se tomo como referencias las sugerencias del siguiente foro
+de StackOverflow https://stackoverflow.com/questions/51719472/remove-green-background-screen-from-image-using-opencv-python
+
 
 
 

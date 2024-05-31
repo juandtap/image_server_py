@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+// considerar borrar 
 function detenerVideo() {
   fetch('/stop_video')
       .then(response => {
@@ -18,39 +19,39 @@ function detenerVideo() {
 }
 
 
-
-function agregarVideo() {
-    var address = document.getElementById('fuenteVideo').value;
-    if (address) {
-        fetch('/set_video_source', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ address: address }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                var videoUrl = document.getElementById('get-url').getAttribute('data-url');
-                document.getElementById('video-externo').src = videoUrl
-                //var videoext = document.getElementById('video-externo')
-                //videoext.setAttribute('src', videoUrl)
+// ya no se usa
+// function agregarVideo() {
+//     var address = document.getElementById('fuenteVideo').value;
+//     if (address) {
+//         fetch('/set_video_source', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ address: address }),
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             if (data.success) {
+//                 var videoUrl = document.getElementById('get-url').getAttribute('data-url');
+//                 document.getElementById('video-externo').src = videoUrl
+//                 //var videoext = document.getElementById('video-externo')
+//                 //videoext.setAttribute('src', videoUrl)
                 
-            } else {
-                alert('Error al establecer la fuente de video.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    } else {
-        alert('Por favor ingresa una dirección IP y un puerto.');
-    }
-}
+//             } else {
+//                 alert('Error al establecer la fuente de video.');
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//         });
+//     } else {
+//         alert('Por favor ingresa una dirección IP y un puerto.');
+//     }
+// }
 
 function aplicarFiltro() {
-    // Aquí puedes realizar una solicitud AJAX para llamar a la función en Python
+    
     fetch('/aplicar_filtro', {
         method: 'POST',
         headers: {
