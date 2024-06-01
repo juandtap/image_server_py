@@ -49,7 +49,7 @@ function detenerVideo() {
 //         alert('Por favor ingresa una dirección IP y un puerto.');
 //     }
 // }
-
+// llama a la funcion que aplica y fusiona las imagenes
 function aplicarFiltro() {
     
     fetch('/aplicar_filtro', {

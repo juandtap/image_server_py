@@ -13,17 +13,17 @@ flag_imagen_recibida = False
 
 # origenes para fusionar la imagen
 # el video tiene una resolcion de 1920x1080
-# la imagen se copia en el punto (1800, 900) el tamanio es 64X64 
+# la imagen se copia en el punto (1600, 500) 
 x_img_o = 1600
 y_img_o = 500
-# el video de la fuente 2 se copia en (100, 500) el tamania es 640 x 480
+# el video de la fuente 2 se copia en (100, 400) 
 x_vid_o = 100
 y_vid_o = 400
 
 video_src = "video.mov"
 
 # direccion de la webcam
-video_src_2 = "172.16.220.63:4747"
+video_src_2 = "172.16.213.103:4747"
 
 # obtienne la ip de la webcam al presionar el boton "obtener video"
 @app.route('/set_video_source', methods=['POST'])
@@ -49,16 +49,13 @@ def frames_video():
     while True:
         
         succes, frame = video_local.read()
-        # succes2, frame2 = video_externo.read()
        
         if not succes:
             break
         else:
-            # cap_prop_fps bugeado en opencv python no muestra los fps que son
-            #cv.putText(frame, str(cv.CAP_PROP_FPS), (40,40), cv.FONT_HERSHEY_SIMPLEX ,1,(255, 0, 0) , 2 ,cv.LINE_AA)
-           
-            _, buffer = cv.imencode('.jpg', frame)
             
+            #cv.putText(frame, str(cv.CAP_PROP_FPS), (40,40), cv.FONT_HERSHEY_SIMPLEX ,1,(255, 0, 0) , 2 ,cv.LINE_AA)          
+            _, buffer = cv.imencode('.jpg', frame)
             
             frame = buffer.tobytes()
             yield (b'--frame\r\n'
@@ -73,7 +70,8 @@ def video_feed():
     return Response(frames_video(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
-
+# ya no se usa, la fusion se la hace directamente en el metodo aplicar_filtros 
+# solo se puede acceder a la camara una solicitud a la vez, buscar otra forma o app 
 def frames_video_externo():
     global video_src_2
     print(video_src_2)
@@ -84,7 +82,6 @@ def frames_video_externo():
         print("No se pudo abrir el video externo")
         return
     
-
     while True:
         
         succes2, frame2 = video_ext.read()
@@ -132,7 +129,7 @@ def aplicar_filtro():
             print("NO se abrio el video ", video_src_2)
 
         while True:
-            #cv.imshow("imagen", imagen_android)
+            
             _, frame = video_local.read()
 
             _, frame2 = video_externo.read()
@@ -143,14 +140,19 @@ def aplicar_filtro():
 
             resultado_final = cv.addWeighted(frame_sin_fondo, 1, frame_bordes, 1, 0)
 
+            # la imagen recibida desde android no tiene fondo por lo que los piexles vacios se ven en color 
+            # negro por lo que quitamos los pixeles negros (0,0,0)
+
+            # usamos la mascara para copiar solo los pixeles no negros
             mask = np.any(imagen_android != [0, 0, 0], axis=-1)
         
-            
+            # convertimos la mascara a color 
             mask_rgb = np.stack([mask, mask, mask], axis=-1)
         
-            # Usamos la máscara para copiar solo los píxeles no negros
+            # copiamos todos los pixeles no negros(vacios) al video
             frame[y_img_o:y_img_o + alto_img, x_img_o:x_img_o + ancho_img][mask_rgb] = imagen_android[mask_rgb]
             
+            # se hace el mismo proceso para el video externo, solo que ahora se quita los pixels en blanco
             mask2 = np.any(resultado_final != [255,255,255], axis=-1)
             mask_rgb2 = np.stack([mask2,mask2,mask2], axis=-1)
 
@@ -167,7 +169,7 @@ def aplicar_filtro():
     
     return jsonify({'status': 'Filtro aplicado'})
 
-# funcion para detener el video
+# funcion para detener el video # aun no se a usado
 @app.route('/stop_video')
 def stop_video():
     return redirect(url_for('index'))
@@ -197,7 +199,7 @@ def recepcion():
             img.save(image_path)
         flag_imagen_recibida = True
         print("imagen recibida")
-    # solo se muestra en curl 
+    # solo para retornar algo
     return  jsonify({'mensaje': 'imagen recibida'})
 
 

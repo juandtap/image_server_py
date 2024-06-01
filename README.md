@@ -6,6 +6,11 @@
 
 Servidor Flask para fusion de imagenes provenientes desde dos fuentes, la primera la computadora desde donde se ejecuta este servidor y la segunda desde la apliaccion en Android la cual envia la imagen procesada por sockets.
 
+### Android App
+
+El codigo de la aplicacion de android se puede encontrar en https://github.com/Paul-Astudillo/proyectoIntegradorV1
+
+
 ### Funcionamiento
 
 Para mayor comodidad la webcam debe estar ya activa
@@ -35,6 +40,7 @@ App Android:
 Servidor Flask:
     - Quitar fondo
     - Deteccion de bordes (Canny, Dilaacion, GaussianBlur)
+    - coloreo de esos bordes
     
 #### Nota
 Para el codigo de quitar el fondo con espacion de color LAB se tomo como referencias las sugerencias del siguiente foro
